@@ -33,15 +33,15 @@ $(document).ready(function(){
         $("#inner").empty();
         let playerName = $(this).val();
 
-        let queryURL = $.get("https://api.giphy.com/v1/gifs/search?q=" + playerName + "&api_key=rIQtqBsnwS9APOr97WLCDTut7pW8ETYu&limit=10");
+        let queryURL = $.get("https://api.giphy.com/v1/gifs/search?q=" + playerName + "&api_key=rIQtqBsnwS9APOr97WLCDTut7pW8ETYu&limit=20");
         queryURL.done(function(response) { 
         console.log("success got data", response);
         
         let jiffs = response.data
         
         for (i in jiffs){
-            let gif = `<div class="panel panel-primary col-md-4 col-sm-4 col-xs-6">
-            <img class="staticImage img-circle col-md-12"  data-name="${i}" src="${jiffs[i].images[x].url}" alt="${playerName}" width="250px" height="250px">
+            let gif = `<div style="display: inline-block;"> 
+            <img class="staticImage img-circle col-md-12"  data-name="${i}" src="${jiffs[i].images[x].url}" alt="${playerName}" style="width:320px; height:210px;">
             <h3 class="col-md-offset-3 col-md-3 col-sm-offset-3 col-sm-3 col-xs-offset-3 col-xs-3"><span class="label label-primary">${response.data[i].rating}</span></h3>
             <a class="button col-md-offset-3 col-md-3 col-sm-offset-3 col-sm-3 col-xs-offset-3 col-xs-3" href="${jiffs[i].images.original.url}" download="${playerName}.jpg"><span class="glyphicon glyphicon-download-alt"></span></a>
             </div>`;
