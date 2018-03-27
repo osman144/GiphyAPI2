@@ -28,6 +28,7 @@ $(document).ready(function(){
     //Access Giphy API 
     $(document).on("click",".sportButtons",function() {
 
+        let x = "480w_still";
 
         $("#inner").empty();
         let playerName = $(this).val();
@@ -40,7 +41,7 @@ $(document).ready(function(){
         
         for (i in jiffs){
             let gif = `<div class="panel panel-primary col-md-4 col-sm-4 col-xs-6">
-            <img class="gif img-circle col-md-12"  data-name="${i}" src="${jiffs[i].images.original.url}" alt="${playerName}" width="250px" height="250px">
+            <img class="staticImage img-circle col-md-12"  data-name="${i}" src="${jiffs[i].images[x].url}" alt="${playerName}" width="250px" height="250px">
             <h3 class="col-md-offset-3 col-md-3 col-sm-offset-3 col-sm-3 col-xs-offset-3 col-xs-3"><span class="label label-primary">${response.data[i].rating}</span></h3>
             <a class="button col-md-offset-3 col-md-3 col-sm-offset-3 col-sm-3 col-xs-offset-3 col-xs-3" href="${jiffs[i].images.original.url}" download="${playerName}.jpg"><span class="glyphicon glyphicon-download-alt"></span></a>
             </div>`;
@@ -49,18 +50,21 @@ $(document).ready(function(){
             }
 
 
-        $(document).on('click', '.gif', function() {
-            var src = $(this).attr("src");
-            if($(this).hasClass('playing')){
-                //stop
-                $(this).attr('src', src.replace(/\.gif/i, "_s.gif"))
-                $(this).removeClass('playing');
-            } else {
-            //play
-            $(this).addClass('playing');
-            $(this).attr('src', src.replace(/\_s.gif/i, ".gif"))
-            }
-        });
+        $(document).on("click",".staticImage", function(){
+            let dataNumber = $(this).attr("data-name");
+            // console.log(response.data[9].images.downsized.url)
+            $(this).attr("src",response.data[dataNumber].images.downsized.url);
+            $(this).removeClass("staticImage");
+            $(this).addClass("animatedImage");
+        });  
+        
+        // Add a class to make an image static whenever its clicked 
+        $(document).on("click",".animatedImage", function(){
+            let dataNumber = $(this).attr("data-name");
+            $(this).attr("src",response.data[dataNumber].images[x].url); 
+            $(this).removeClass("animatedImage");
+            $(this).addClass("staticImage");
+        }); 
         }
     );
 
